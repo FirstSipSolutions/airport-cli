@@ -1,0 +1,15 @@
+<DataSourcesHistory>
+  <DataSourceFromHistory isRemovedFromProject="true">
+    <data-source source="LOCAL" name="jdbc:h2:mem:b052cef2-1c1a-4bcc-8ab8-8a8ecfa91c8c;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE [DEBUG]" group="​AirportCliApplication" uuid="d9b7f94d-19e7-45d2-b6ec-1dc3a968b785">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="H2" />
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:mem:b052cef2-1c1a-4bcc-8ab8-8a8ecfa91c8c;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</jdbc-url>
+      <user-name>sa</user-name>
+      <schema-mapping />
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </DataSourceFromHistory>
+</DataSourcesHistory>
