@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="airport_cli" options="-parameters" />
+      <module name="airport_cli" options="-parameters --add-exports java.net.http/jdk.internal.net.http.quic=ALL-UNNAMED" />
     </option>
   </component>
 </project>

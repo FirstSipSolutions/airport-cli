@@ -1,11 +1,14 @@
 package com.airport.city;
 
+import java.util.Objects;
+
 public class CityDTO {
 
     private Long id;
     private String name;
     private String state;
     private int population;
+    private String code;
 
     public CityDTO(){
 
@@ -43,6 +46,14 @@ public class CityDTO {
         this.population = population;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
 
@@ -52,5 +63,10 @@ public class CityDTO {
                 ", State: " + state + '\'' +
                 ", Population:" + population;
 
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 }
