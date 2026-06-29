@@ -47,11 +47,10 @@ public class CityRESTClient {
             HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode()==200) {
                 System.out.println("***** " + response.body());
+                cities = buildCityListFromResponse(response.body());
             } else {
                 System.out.println("Error Status Code: " + response.statusCode());
             }
-
-            cities = buildCityListFromResponse(response.body());
 
 
         } catch (IOException | InterruptedException e) {
@@ -70,7 +69,7 @@ public class CityRESTClient {
         JsonNode contentNode = rootNode.get("content");
 
         String arrayString = contentNode.toString();
-        cities = mapper.readValue(response, new TypeReference<List<CityDTO>>(){});
+        cities = mapper.readValue(arrayString, new TypeReference<List<CityDTO>>(){});
 
         return cities;
     }

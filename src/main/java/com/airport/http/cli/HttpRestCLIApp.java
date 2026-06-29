@@ -16,7 +16,7 @@ public class HttpRestCLIApp {
         for (CityDTO cityDTO : cities) {
             report.append(cityDTO.getName());
             report.append(" - ");
-            report.append(cityDTO.getCode());
+            report.append(cityDTO.getState());
 
             if (cities.indexOf(cityDTO) != (cities.size() - 1)) {
                 report.append(",");
@@ -45,6 +45,11 @@ public class HttpRestCLIApp {
     }
 
     public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Error: Please provide the API Server URL as an argument.");
+            return;
+        }
+
         for (String arg : args) {
             System.out.println(arg);
         }
@@ -66,8 +71,5 @@ public class HttpRestCLIApp {
                 cliApp.generateCityReport();
             }
         }
-
     }
-
-
 }
