@@ -1,12 +1,12 @@
 package com.airport.http.cli;
 
 import com.airport.city.CityDTO;
-import com.airport.http.client.CityRESTClient;
+import com.airport.http.client.RESTClient;
 
 import java.util.List;
 
 public class HttpRestCLIApp {
-    private CityRESTClient cityRestClient;
+    private RESTClient restClient;
 
     public String generateCityReport() {
         List<CityDTO> cities = getCityRestClient().getAllCities();
@@ -32,16 +32,16 @@ public class HttpRestCLIApp {
         System.out.println(getCityRestClient().getResponseFromHTTPRequest());
     }
 
-    public CityRESTClient getCityRestClient() {
-        if (cityRestClient == null) {
-            cityRestClient = new CityRESTClient();
+    public RESTClient getCityRestClient() {
+        if (restClient == null) {
+            restClient = new RESTClient();
         }
 
-        return cityRestClient;
+        return restClient;
     }
 
-    public void setCityRestClient(CityRESTClient cityRestClient) {
-        this.cityRestClient = cityRestClient;
+    public void setCityRestClient(RESTClient restClient) {
+        this.restClient = restClient;
     }
 
     public static void main(String[] args) {
@@ -60,10 +60,10 @@ public class HttpRestCLIApp {
 
         if (serverURL != null && !serverURL.isEmpty()) {
 
-            CityRESTClient cityRestClient = new CityRESTClient();
-            cityRestClient.setServerURL(serverURL);
+            RESTClient restClient = new RESTClient();
+            restClient.setServerURL(serverURL);
 
-            cliApp.setCityRestClient(cityRestClient);
+            cliApp.setCityRestClient(restClient);
 
             if (serverURL.contains("greeting")) {
                 cliApp.listGreetings();

@@ -15,7 +15,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityRESTClient {
+public class RESTClient {
     private String serverURL;
     private HttpClient client;
 
