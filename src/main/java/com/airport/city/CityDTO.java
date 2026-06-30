@@ -1,5 +1,7 @@
 package com.airport.city;
 
+import java.util.Objects;
+
 public class CityDTO {
 
     private Long id;
