@@ -15,3 +15,17 @@ public class AircraftDTO {
     private String type;
     private String airlineName;
     private int numberOfPassengers;
+
+
+    //DOcumentation question 3 response here
+    // the airports this aircraft flies to will be started from here
+    // this listss what answers doc question 3 for the deliverables
+    // (airports per aircraft)
+    private List<AirportDTO> airports;
+
+    public AircraftDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    };
