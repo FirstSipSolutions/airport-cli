@@ -25,7 +25,7 @@ public class RESTClient {
 
         try {
             HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode()!=200) {
+            if (response.statusCode() != 200) {
                 System.out.println("Status Code: " + response.statusCode());
             }
 
@@ -45,7 +45,7 @@ public class RESTClient {
 
         try {
             HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode()==200) {
+            if (response.statusCode() == 200) {
                 System.out.println("***** " + response.body());
                 cities = buildCityListFromResponse(response.body());
             } else {
@@ -69,7 +69,8 @@ public class RESTClient {
         JsonNode contentNode = rootNode.get("content");
 
         String arrayString = contentNode.toString();
-        cities = mapper.readValue(arrayString, new TypeReference<List<CityDTO>>(){});
+        cities = mapper.readValue(arrayString, new TypeReference<List<CityDTO>>() {
+        });
 
         return cities;
     }
@@ -84,10 +85,24 @@ public class RESTClient {
 
     public HttpClient getClient() {
         if (client == null) {
-            client  = HttpClient.newHttpClient();
+            client = HttpClient.newHttpClient();
         }
 
         return client;
+    }
+
+// -------------------------------------------------------------------------
+//Passenger Here - this will be the repsonse for Question 2 in documnetation
+// This will call on the API, then returns a list of passengers
+
+    public List<PassengerDTO> getAllPassengers() {
+
+        List<PassengerDTO> passengers = new ArrayList<PassengerDTO>();
+
+        // Request line will create a new serverURL for building out the response
+        //Hopefully
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
+
     }
 
 }
