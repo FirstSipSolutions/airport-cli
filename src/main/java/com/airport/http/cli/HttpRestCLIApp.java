@@ -72,4 +72,29 @@ public class HttpRestCLIApp {
             }
         }
     }
+
+    // ----------------------------------------------------------------
+    // Passenger response for listing report via pass and plane coorilation
+    // what aircraft has each passenger in it for question 2 here
+    // this will be getting passengers ...then for each pass it will print the name and the aircraft
+
+    public String generatePassengerReport() {
+
+        List<PassengerDTO> passengers = getCityRestClient().getAllPassengers();
+
+        StringBuffer report = new StringBuffer();
+
+        for (PassengerDTO passenger : passengers) {
+            report.append(passenger.getFirstName() + " " + passenger.getLastName() + " flew on: ");
+
+            for (AircraftDTO aircraft : passenger.getAircraft()) {
+                report.append(aircraft.getType() + " ");
+            }
+
+            report.append("\n");
+        }
+
+        System.out.println(report.toString());
+        return report.toString();
+    }
 }

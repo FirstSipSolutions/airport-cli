@@ -15,6 +15,8 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.airport.passenger.PassengerDTO;
+
 public class RESTClient {
     private String serverURL;
     private HttpClient client;
@@ -103,20 +105,48 @@ public class RESTClient {
         //Hopefully
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
 
-    }
 
 
-try {
+
+    try {
         HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 200) {
             passengers = buildPassengerListFromResponse(response.body());
         } else {
             System.out.println("Error Status Code: " + response.statusCode());
         }
-    } catch (IOException | InterruptedException e) {
+    } catch(IOException | InterruptedException e){
         e.printStackTrace();
     }
 
         return passengers;
 
-}
+    }
+
+public List<PassengerDTO> buildPassengerListFromResponse(String response) throws JsonProcessingException {
+
+        List<PassengerDTO> passengers = new ArrayList<PassengerDTO>();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        JsonNode rootNode = mapper.readTree(response);
+        JsonNode contentNode = rootNode.get("content");
+
+        String arrayString = contentNode.toString();
+        passengers = mapper.readValue(arrayString, new TypeReference<List<PassengerDTO>>() {
+        });
+
+        return passengers;
+        }
+
+        }
+
+
+
+
+
+
+
+
+
