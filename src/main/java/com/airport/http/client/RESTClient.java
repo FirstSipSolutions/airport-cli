@@ -105,4 +105,18 @@ public class RESTClient {
 
     }
 
+
+try {
+        HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200) {
+            passengers = buildPassengerListFromResponse(response.body());
+        } else {
+            System.out.println("Error Status Code: " + response.statusCode());
+        }
+    } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+    }
+
+        return passengers;
+
 }
