@@ -152,7 +152,10 @@ public List<PassengerDTO> buildPassengerListFromResponse(String response) throws
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
     }
 
-
+try {
+        HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200) {
+            aircraft = buildAircraftListFromResponse(response.body());
 
 
 
