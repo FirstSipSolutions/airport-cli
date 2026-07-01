@@ -8,7 +8,6 @@ import com.airport.passenger.PassengerDTO;
 import com.airport.aircraft.AircraftDTO;
 import com.airport.airport.AirportDTO;
 
-
 import java.util.List;
 
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
@@ -19,6 +18,7 @@ public class HttpRestCLIApp {
         List<CityDTO> cities = getRestClient().getAllCities();
 
         StringBuffer report = new StringBuffer();
+        report.append("\n");
 
         for (CityDTO cityDTO : cities) {
             report.append(cityDTO.getName());
@@ -65,10 +65,6 @@ public class HttpRestCLIApp {
             return;
         }
 
-        for (String arg : args) {
-            System.out.println(arg);
-        }
-
         HttpRestCLIApp cliApp = new HttpRestCLIApp();
 
         String serverURL = args[0];
@@ -82,13 +78,20 @@ public class HttpRestCLIApp {
 
             if (serverURL.contains("greeting")) {
                 cliApp.listGreetings();
+            }
+            else if (serverURL.contains("passengers")) {
 
-        } else if (serverURL.contains("passengers")) {
-                cliApp.generatePassengerReport();
-            } else if (serverURL.contains("aircraft")) {
+                if(args.length > 1 && args[1].equalsIgnoreCase("Q4")){
+                    cliApp.generatePassengerAirportReport();
+                } else {
+                    cliApp.generatePassengerReport();
+                }
+
+            }
+            else if (serverURL.contains("aircraft")) {
                 cliApp.generateAircraftReport();
             }
-            else {
+            else if (serverURL.contains("cities")){
                 cliApp.generateCityAirportReport();
             }
         }
@@ -142,5 +145,41 @@ public String generateAircraftReport() {
     System.out.println(report.toString());
     return report.toString();
 }
+
+    public String generatePassengerAirportReport() {
+        List<PassengerDTO> passengers = getRestClient().getAllPassengers();
+
+        StringBuffer report = new StringBuffer();
+        report.append("\n");
+
+        for(PassengerDTO passenger : passengers) {
+            boolean visitedAirport = false;
+            report.append(passenger.getFirstName());
+            report.append(" ");
+            report.append(passenger.getLastName());
+            report.append(" has visited: ");
+
+            if(passenger.getAircraft() != null) {
+
+                for (AircraftDTO aircraft: passenger.getAircraft()){
+                    if (aircraft.getAirports() != null) {
+                        for(AirportDTO airport : aircraft.getAirports()) {
+                            report.append(airport.getName());
+                            report.append(" - ");
+                            report.append(airport.getCode());
+                            report.append("\n");
+                            visitedAirport = true;
+                        }
+                    }
+                }
+            }
+            if (!visitedAirport) {
+                report.append("No airport in flight history");
+                report.append("\n");
+            }
+        }
+        System.out.println(report);
+        return report.toString();
+    }
 
 }
