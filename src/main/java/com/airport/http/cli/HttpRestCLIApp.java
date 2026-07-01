@@ -2,14 +2,17 @@ package com.airport.http.cli;
 
 import com.airport.city.CityDTO;
 import com.airport.http.client.RESTClient;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
 import java.util.List;
 
+@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class HttpRestCLIApp {
     private RESTClient restClient;
 
     public String generateCityReport() {
-        List<CityDTO> cities = getCityRestClient().getAllCities();
+        List<CityDTO> cities = getRestClient().getAllCities();
 
         StringBuffer report = new StringBuffer();
 
@@ -19,20 +22,20 @@ public class HttpRestCLIApp {
             report.append(cityDTO.getState());
 
             if (cities.indexOf(cityDTO) != (cities.size() - 1)) {
-                report.append(",");
+                report.append(", ");
             }
         }
 
-        System.out.println(report.toString());
+        System.out.println(report);
 
         return report.toString();
     }
 
     private void listGreetings() {
-        System.out.println(getCityRestClient().getResponseFromHTTPRequest());
+        System.out.println(getRestClient().getResponseFromHTTPRequest());
     }
 
-    public RESTClient getCityRestClient() {
+    public RESTClient getRestClient() {
         if (restClient == null) {
             restClient = new RESTClient();
         }
@@ -40,7 +43,7 @@ public class HttpRestCLIApp {
         return restClient;
     }
 
-    public void setCityRestClient(RESTClient restClient) {
+    public void setRestClient(RESTClient restClient) {
         this.restClient = restClient;
     }
 
@@ -63,7 +66,7 @@ public class HttpRestCLIApp {
             RESTClient restClient = new RESTClient();
             restClient.setServerURL(serverURL);
 
-            cliApp.setCityRestClient(restClient);
+            cliApp.setRestClient(restClient);
 
             if (serverURL.contains("greeting")) {
                 cliApp.listGreetings();

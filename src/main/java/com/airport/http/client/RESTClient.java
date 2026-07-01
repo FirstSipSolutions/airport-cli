@@ -46,7 +46,7 @@ public class RESTClient {
         try {
             HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode()==200) {
-                System.out.println("***** " + response.body());
+                System.out.println(response.body());
                 cities = buildCityListFromResponse(response.body());
             } else {
                 System.out.println("Error Status Code: " + response.statusCode());
