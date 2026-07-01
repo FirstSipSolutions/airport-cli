@@ -177,14 +177,11 @@ public class RESTClient {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 
-        // this is the part for the response tree via node root waiting for the posting of content to be picked up
-        // that allows pagination to work , navigation response will make all of this tie into a working snippet
-        JsonNode rootNode = mapper.readTree(response);
-        JsonNode contentNode = rootNode.get("content");
-
-        String arrayString = contentNode.toString();
-        aircraft = mapper.readValue(arrayString, new TypeReference<List<AircraftDTO>>() {
+        // this no longer requires root node for "content" due to aircraft not having a content line
+        aircraft = mapper.readValue(response, new TypeReference<List<AircraftDTO>>() {
         });
+
+       // removed mapper and to string as its not needed for this aircraft response
 
         return aircraft;
     }

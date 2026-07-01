@@ -6,6 +6,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 import com.airport.passenger.PassengerDTO;
 import com.airport.aircraft.AircraftDTO;
+import com.airport.airport.AirportDTO;
 
 
 import java.util.List;
@@ -76,6 +77,8 @@ public class HttpRestCLIApp {
 
         } else if (serverURL.contains("passengers")) {
                 cliApp.generatePassengerReport();
+            } else if (serverURL.contains("aircraft")) {
+                cliApp.generateAircraftReport();
             }
             else {
                 cliApp.generateCityReport();
@@ -108,4 +111,29 @@ public class HttpRestCLIApp {
         System.out.println(report.toString());
         return report.toString();
     }
+
+// ----------------------------------------------------------------
+// Aircraft response for listing report via airport and plane
+// what aircraft it is for question 3 here
+// this will be getting aircrafts ...then for each one it will print the name and the aircraft
+public String generateAircraftReport() {
+
+    List<AircraftDTO> aircraft = getRestClient().getAllAircraft();
+
+    StringBuffer report = new StringBuffer();
+
+    for (AircraftDTO plane : aircraft) {
+        report.append(plane.getType() + " flies to: ");
+
+        for (AirportDTO airport : plane.getAirports()) {
+            report.append(airport.getName() + " ");
+        }
+
+        report.append("\n");
+    }
+
+    System.out.println(report.toString());
+    return report.toString();
+}
+
 }
