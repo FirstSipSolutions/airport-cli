@@ -77,6 +77,8 @@ public class HttpRestCLIApp {
 
         } else if (serverURL.contains("passengers")) {
                 cliApp.generatePassengerReport();
+            } else if (serverURL.contains("aircraft")) {
+                cliApp.generateAircraftReport();
             }
             else {
                 cliApp.generateCityReport();
@@ -109,7 +111,7 @@ public class HttpRestCLIApp {
         System.out.println(report.toString());
         return report.toString();
     }
-}
+
 // ----------------------------------------------------------------
 // Aircraft response for listing report via airport and plane
 // what aircraft it is for question 3 here
