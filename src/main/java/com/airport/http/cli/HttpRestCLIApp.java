@@ -4,6 +4,9 @@ import com.airport.city.CityDTO;
 import com.airport.http.client.RESTClient;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
+import com.airport.passenger.PassengerDTO;
+import com.airport.aircraft.AircraftDTO;
+
 
 import java.util.List;
 
@@ -70,9 +73,39 @@ public class HttpRestCLIApp {
 
             if (serverURL.contains("greeting")) {
                 cliApp.listGreetings();
-            } else {
+
+        } else if (serverURL.contains("passengers")) {
+                cliApp.generatePassengerReport();
+            }
+            else {
                 cliApp.generateCityReport();
             }
+
         }
+    }
+
+    // ----------------------------------------------------------------
+    // Passenger response for listing report via pass and plane corilation
+    // what aircraft has each passenger in it for question 2 here
+    // this will be getting passengers ...then for each pass it will print the name and the aircraft
+
+    public String generatePassengerReport() {
+
+        List<PassengerDTO> passengers = getCityRestClient().getAllPassengers();
+
+        StringBuffer report = new StringBuffer();
+
+        for (PassengerDTO passenger : passengers) {
+            report.append(passenger.getFirstName() + " " + passenger.getLastName() + " flew on: ");
+
+            for (AircraftDTO aircraft : passenger.getAircraft()) {
+                report.append(aircraft.getType() + " ");
+            }
+
+            report.append("\n");
+        }
+
+        System.out.println(report.toString());
+        return report.toString();
     }
 }
