@@ -40,6 +40,10 @@ public class RESTClient {
         return responseBody;
     }
 
+    // -------------------------------------------------------------------------
+    //City Here - this will be the response for Question 1 in documentation
+    // This will call on the API, then returns a list of cities
+
     public List<CityDTO> getAllCities() {
         List<CityDTO> cities = new ArrayList<>();
 
@@ -122,7 +126,7 @@ public class RESTClient {
 
     public List<PassengerDTO> buildPassengerListFromResponse(String response) throws JsonProcessingException {
 
-        List<PassengerDTO> passengers = new ArrayList<PassengerDTO>();
+        List<PassengerDTO> passengers;
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -144,7 +148,7 @@ public class RESTClient {
 
     public List<AircraftDTO> getAllAircraft() {
 
-        List<AircraftDTO> aircraft = new ArrayList<AircraftDTO>();
+        List<AircraftDTO> aircraft = new ArrayList<>();
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
 
@@ -168,7 +172,7 @@ public class RESTClient {
 
     public List<AircraftDTO> buildAircraftListFromResponse(String response) throws JsonProcessingException {
 
-        List<AircraftDTO> aircraft = new ArrayList<AircraftDTO>();
+        List<AircraftDTO> aircraft;
 
 
         // mapping object for deserilization here
@@ -177,7 +181,7 @@ public class RESTClient {
 
 
         // this no longer requires root node for "content" due to aircraft not having a content line
-        aircraft = mapper.readValue(response, new TypeReference<List<AircraftDTO>>() {
+        aircraft = mapper.readValue(response, new TypeReference<>() {
         });
 
        // removed mapper and to string as its not needed for this aircraft response
