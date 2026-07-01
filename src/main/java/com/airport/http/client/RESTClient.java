@@ -152,13 +152,23 @@ public List<PassengerDTO> buildPassengerListFromResponse(String response) throws
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
     }
 
-try {
+
+    // try catch for hadling statsu and request for hhtp to string
+    // this will make sure the statu code will be relative to the response
+    try {
         HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 200) {
             aircraft = buildAircraftListFromResponse(response.body());
 
+        } else {
+            System.out.println("Error Status Code: " + response.statusCode());
+        }
+        } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+        }
 
-
+        return aircraft;
+}
 
 
 
