@@ -2,6 +2,9 @@ package com.airport.http.cli;
 
 import com.airport.city.CityDTO;
 import com.airport.http.client.RESTClient;
+import com.airport.passenger.PassengerDTO;
+import com.airport.aircraft.AircraftDTO;
+
 
 import java.util.List;
 
@@ -67,14 +70,19 @@ public class HttpRestCLIApp {
 
             if (serverURL.contains("greeting")) {
                 cliApp.listGreetings();
-            } else {
+
+        } else if (serverURL.contains("passengers")) {
+                cliApp.generatePassengerReport();
+            }
+            else {
                 cliApp.generateCityReport();
             }
+
         }
     }
 
     // ----------------------------------------------------------------
-    // Passenger response for listing report via pass and plane coorilation
+    // Passenger response for listing report via pass and plane corilation
     // what aircraft has each passenger in it for question 2 here
     // this will be getting passengers ...then for each pass it will print the name and the aircraft
 
