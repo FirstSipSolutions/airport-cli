@@ -1,6 +1,8 @@
 package com.airport.city;
 
-import java.util.Objects;
+import com.airport.airport.AirportDTO;
+
+import java.util.List;
 
 public class CityDTO {
 
@@ -8,6 +10,8 @@ public class CityDTO {
     private String name;
     private String state;
     private int population;
+
+    private List<AirportDTO> airports;
 
     public CityDTO(){
 
@@ -43,6 +47,14 @@ public class CityDTO {
 
     public void setPopulation(int population) {
         this.population = population;
+    }
+
+    public List<AirportDTO> getAirports() {
+        return airports;
+    }
+
+    public void setAirports(List<AirportDTO> airports) {
+        this.airports = airports;
     }
 
     @Override
