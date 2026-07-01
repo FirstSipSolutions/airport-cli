@@ -91,7 +91,7 @@ public class HttpRestCLIApp {
 
     public String generatePassengerReport() {
 
-        List<PassengerDTO> passengers = getCityRestClient().getAllPassengers();
+        List<PassengerDTO> passengers = getRestClient().getAllPassengers();
 
         StringBuffer report = new StringBuffer();
 
