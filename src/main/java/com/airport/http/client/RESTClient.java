@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.airport.passenger.PassengerDTO;
-
+import com.airport.aircraft.AircraftDTO;
 public class RESTClient {
     private String serverURL;
     private HttpClient client;
@@ -106,24 +106,22 @@ public class RESTClient {
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
 
 
-
-
-    try {
-        HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 200) {
-            passengers = buildPassengerListFromResponse(response.body());
-        } else {
-            System.out.println("Error Status Code: " + response.statusCode());
+        try {
+            HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                passengers = buildPassengerListFromResponse(response.body());
+            } else {
+                System.out.println("Error Status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
-    } catch(IOException | InterruptedException e){
-        e.printStackTrace();
-    }
 
         return passengers;
 
     }
 
-public List<PassengerDTO> buildPassengerListFromResponse(String response) throws JsonProcessingException {
+    public List<PassengerDTO> buildPassengerListFromResponse(String response) throws JsonProcessingException {
 
         List<PassengerDTO> passengers = new ArrayList<PassengerDTO>();
 
@@ -138,7 +136,7 @@ public List<PassengerDTO> buildPassengerListFromResponse(String response) throws
         });
 
         return passengers;
-        }
+    }
 
 
 // -------------------------------------------------------------------------
@@ -150,26 +148,48 @@ public List<PassengerDTO> buildPassengerListFromResponse(String response) throws
         List<AircraftDTO> aircraft = new ArrayList<AircraftDTO>();
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
-    }
 
 
-    // try catch for hadling statsu and request for hhtp to string
-    // this will make sure the statu code will be relative to the response
-    try {
-        HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 200) {
-            aircraft = buildAircraftListFromResponse(response.body());
+        // try catch for hadling statsu and request for hhtp to string
+        // this will make sure the statu code will be relative to the response
+        try {
+            HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                aircraft = buildAircraftListFromResponse(response.body());
 
-        } else {
-            System.out.println("Error Status Code: " + response.statusCode());
-        }
+            } else {
+                System.out.println("Error Status Code: " + response.statusCode());
+            }
         } catch (IOException | InterruptedException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
         return aircraft;
-}
+    }
 
+    public List<AircraftDTO> buildAircraftListFromResponse(String response) throws JsonProcessingException {
+
+        List<AircraftDTO> aircraft = new ArrayList<AircraftDTO>();
+
+
+        // mapping object for deserilization here
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+
+        // this is the part for the response tree via node root waiting for the posting of content to be picked up
+        // that allows pagination to work , navigation response will make all of this tie into a working snippet
+        JsonNode rootNode = mapper.readTree(response);
+        JsonNode contentNode = rootNode.get("content");
+
+        String arrayString = contentNode.toString();
+        aircraft = mapper.readValue(arrayString, new TypeReference<List<AircraftDTO>>() {
+        });
+
+        return aircraft;
+    }
+
+}
 
 
 
