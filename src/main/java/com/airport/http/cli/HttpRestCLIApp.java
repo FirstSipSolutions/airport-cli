@@ -15,7 +15,7 @@ import java.util.List;
 public class HttpRestCLIApp {
     private RESTClient restClient;
 
-    public String generateCityReport() {
+    public String generateCityAirportReport() {
         List<CityDTO> cities = getRestClient().getAllCities();
 
         StringBuffer report = new StringBuffer();
@@ -23,11 +23,19 @@ public class HttpRestCLIApp {
         for (CityDTO cityDTO : cities) {
             report.append(cityDTO.getName());
             report.append(" - ");
-            report.append(cityDTO.getState());
+            report.append(cityDTO.getState()).append(": ");
 
-            if (cities.indexOf(cityDTO) != (cities.size() - 1)) {
-                report.append(", ");
-            }
+           if (cityDTO.getAirports() != null && !cityDTO.getAirports().isEmpty()){
+               for (AirportDTO airport : cityDTO.getAirports()) {
+                   report.append(airport.getName());
+                   report.append(" - ");
+                   report.append(airport.getCode());
+                   report.append(".\n");
+               }
+           } else {
+               report.append("No airport listed for this city.");
+               report.append("\n");
+           }
         }
 
         System.out.println(report);
@@ -81,9 +89,8 @@ public class HttpRestCLIApp {
                 cliApp.generateAircraftReport();
             }
             else {
-                cliApp.generateCityReport();
+                cliApp.generateCityAirportReport();
             }
-
         }
     }
 
