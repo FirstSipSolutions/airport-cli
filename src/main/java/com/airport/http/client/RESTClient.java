@@ -140,7 +140,18 @@ public List<PassengerDTO> buildPassengerListFromResponse(String response) throws
         return passengers;
         }
 
-        }
+
+// -------------------------------------------------------------------------
+//Aircraft Here - this will be the repsonse for Question 3 in documnetation
+// This will call on the API, then returns a list of aircraft per the question
+
+    public List<AircraftDTO> getAllAircraft() {
+
+        List<AircraftDTO> aircraft = new ArrayList<AircraftDTO>();
+
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
+    }
+
 
 
 
