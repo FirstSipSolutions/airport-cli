@@ -189,7 +189,15 @@ public class RESTClient {
         return aircraft;
     }
 
+    // adding in a method to add a client with the mock data from restclientTesting
+    // it lets tests swap in the fake HttpClient instead of using this real one
+    public void setClient(HttpClient client) {
+        this.client = client;
+    }
+
 }
+
+
 
 
 
