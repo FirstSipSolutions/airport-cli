@@ -15,8 +15,8 @@ public class RESTClientTest {
 
 // testing variables that will be needed
 
-    private HttpClient = mockHttpClient;
-    private RESTClient = restClient;
+    private HttpClient mockHttpClient;
+    private RESTClient restClient;
 
     private HttpResponse<String> mockResponse;
 
